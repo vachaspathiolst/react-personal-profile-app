@@ -1,7 +1,30 @@
 import {profilesdb, storageRef} from './firebase-config'
 import {collection, addDoc} from 'firebase/firestore';
-import { ref, getDownloadURL } from "firebase/storage";
+import { ref, getDownloadURL, listAll } from "firebase/storage";
+import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 
+const isUserLogedIn = async () => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // User is signed in, see docs for a list of available properties
+          // https://firebase.google.com/docs/reference/js/auth.user
+          const uid = user.uid;
+          return {
+            username: uid,
+            loggedin: true
+          }
+          // ...
+        } else {
+          // User is signed out
+          // ...
+          return {
+            username: null,
+            loggedin: false
+          }
+        }
+      });
+}
 const sendMessage = async (payload) => {
     let dt = new Date()
     dt = dt.toString()
@@ -15,6 +38,7 @@ const sendMessage = async (payload) => {
         return 'FAILED'
     })
 }
+const getAuthFn = getAuth
 const addSkillDoc = async (payload) => {
     /**
      * experience_years, name, notes, specification
@@ -51,6 +75,17 @@ const addSkillEndorsementDoc = async (payload) => {
     })
 }
 
+const getVideoFilesRef = function () {
+    return ref(storageRef, 'samplevideos')
+}
+const listAllVideoFiles = function () {
+    const ref = getVideoFilesRef()
+    return listAll(ref)
+}
+const getDownloadUrlVideo = (filename) => {
+    const refr = ref(storageRef, `samplevideos/${filename}`)
+    return getDownloadURL(refr)
+}
 const downloadFileUrlAnchorTag = function (url) {
     const pathRef = ref(storageRef, url)
     const durl = getDownloadURL(pathRef)
@@ -114,5 +149,12 @@ export {
     addSkillEndorsementDoc,
     downloadFileUrlAnchorTag,
     postDeviceInfo,
-    postVisitorInfo
+    postVisitorInfo,
+    getAuthFn,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    isUserLogedIn,
+    getVideoFilesRef,
+    listAllVideoFiles,
+    getDownloadUrlVideo
 }

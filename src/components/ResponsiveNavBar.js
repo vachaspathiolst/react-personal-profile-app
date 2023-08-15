@@ -2,16 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import LinkedInLink from './LinkedInLink'
 import { useNavigate } from "react-router-dom";
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import DownloadBtn from './DownloadBtn'
-const profileSelector = state => state.profile
+import useAuth from './hooks/useAuth ';
+import useLogout from './hooks/useLogout';
 
+// const profileSelector = state => state.profile
 export default function SkillsPage (props) {
     const showBackBtn = props.back
     const navigate = useNavigate();
     const [width, setWindowWidth] = useState(0)
     const [showMenu, setShowMenu] = useState(false)
-    const {profile} = useSelector(profileSelector)
+    // const {profile} = useSelector(profileSelector)
+    const userStatus = useAuth()
+    const {handleLogout} = useLogout()
     useEffect(() => { 
 
         updateDimensions();
@@ -42,9 +46,18 @@ export default function SkillsPage (props) {
             <Link to="/projects">Projects</Link>
             <Link to="/endorsements">Endorsements</Link>
             {/* <a href={`personal-profile/public/resumes/Resume_Vachaspathi D_07022023.pdf`} download="Resume-VachaspathiD.pdf" target="_blank" rel="noreferrer"><i className="fa fa-download"></i>Resume</a> */}
-            <DownloadBtn className="hand" />
-            { profile && profile.display_name && <div className="btn menu-anchor-btn float-right nav-bar-display-name"><i className="fa fa-user"></i>{profile.display_name}</div>}
-            <LinkedInLink className={'float-right'} />
+            <DownloadBtn className="hand" disabled={!userStatus} />
+            { userStatus && <Link to="/videos">Videos</Link> }
+            <LinkedInLink />
+            { userStatus ? <>
+                <button className="btn menu-anchor-btn float-right nav-bar-display-name" onClick={() => {
+                    handleLogout()
+                }}><i className="fa fa-sign-out"></i></button>
+                <div className=" btn menu-anchor-btn float-right nav-bar-display-name"><i className="fa fa-user"></i>{userStatus.displayName || userStatus.email}</div>
+            </>
+            :
+            <Link to="/authenticateuser/login" className='btn menu-anchor-btn float-right nav-bar-display-name rotating-border'><i className="fa fa-sign-in"></i>Login</Link>
+            }
         </div>) : (
             <>
             <div id="navbar" className="navbar">
@@ -68,7 +81,12 @@ export default function SkillsPage (props) {
                 showMenu &&
                 <div className="open-menu-list-contianer">
                     <div>
-                    { profile && profile.display_name && <div className="btn menu-anchor-btn"><i className="fa fa-user"></i>{profile.display_name}</div>}
+                    { userStatus ? <>
+                        <div className="btn menu-anchor-btn nav-bar-display-name"><i className="fa fa-user"></i>{userStatus.displayName || userStatus.email}</div>
+                    </>
+                    :
+                    <Link to="/authenticateuser/login" className='btn menu-anchor-btn nav-bar-display-name rotating-border'>Login</Link>
+                    }
                     </div>
                     <div>
                     <Link to="/" className="active">Home</Link>
@@ -83,11 +101,20 @@ export default function SkillsPage (props) {
                     <Link to="/endorsements">Endorsements</Link>
                     </div>
                     <div>
+                    { userStatus && <Link to="/videos">Videos</Link> }
+                    </div>
+                    <div>
                     {/* <a href={`personal-profile/public/resumes/Resume_Vachaspathi D_07022023.pdf`} download="Resume-VachaspathiD.pdf" target="_blank" rel="noreferrer"><i className="fa fa-download"></i>Resume</a> */}
                     <DownloadBtn />
                     </div>
                     <div>
                     <LinkedInLink />
+                    </div>
+                    <div>
+                        { userStatus && <button className="btn menu-anchor-btn nav-bar-display-name" onClick={() => {
+                            handleLogout()
+                        }}><i className="fa fa-sign-out"></i>Logout</button>
+                        }
                     </div>
                 </div>
             }

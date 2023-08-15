@@ -11,7 +11,7 @@ function App() {
   useEffect(() => {
     headerAlertRef.current.showMsgFn('Loading...')
     setTimeout(() => {
-      headerAlertRef.current.hideMessageFn()
+      if (headerAlertRef.current) { headerAlertRef.current.hideMessageFn() }
     }, 2000);
     checkUserDeviceInfo()
   }, [])

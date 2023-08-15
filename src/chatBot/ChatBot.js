@@ -151,7 +151,7 @@ const ChatBot = () => {
   return (
     <>
     <button className="open-button"
-    style={{ 'align-items': 'center', display: 'flex', 'justify-content': 'center' }} onClick={() => {
+    style={{ alignItems: 'center', display: 'flex', justifyContent: 'center' }} onClick={() => {
         setChatWinOpen(true)
     }}><i className="fa fa-weixin fa-2x"></i><span>Chat Assistant</span></button>
     <div className="chat-popup chatbot-popup" style={{ 'display': chatWinOpen ? 'block' : 'none' }}>

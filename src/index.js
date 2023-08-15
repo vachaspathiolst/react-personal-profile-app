@@ -12,6 +12,9 @@ import MainProfile from './components/MainProfile'
 import SkillsPage from './components/SkillsPage'
 import EndorsementsPage from './components/EndorsementsPage'
 import ProjectsPage from './components/ProjectsPage'
+import LoginPage from './components/Login'
+import Signup from './components/Signup'
+import VideoFilesList from './components/VideoFilesList';
 import reportWebVitals from './reportWebVitals';
 
 import {
@@ -42,6 +45,18 @@ const router = createBrowserRouter([
     {
       path: 'projects',
       element: <ProjectsPage />
+    },
+    {
+      path: 'authenticateuser/login',
+      element: <LoginPage />
+    },
+    {
+      path: 'authenticateuser/signup',
+      element: <Signup />
+    },
+    {
+      path: 'videos',
+      element: <VideoFilesList />
     }
   ]
   },
