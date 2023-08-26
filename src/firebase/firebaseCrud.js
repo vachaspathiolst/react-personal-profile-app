@@ -2,7 +2,7 @@ import {profilesdb, storageRef} from './firebase-config'
 import {collection, addDoc} from 'firebase/firestore';
 import { ref, getDownloadURL, listAll } from "firebase/storage";
 import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
-
+// profilesdb.enablePersistence()
 const isUserLogedIn = async () => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {

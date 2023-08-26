@@ -13,6 +13,12 @@ const profile = (state = initialState, action) => {
               status: 'loading',
             }
         }
+        case 'SET_OFF_APP_LOADING_MASK': {
+            return {
+              ...state,
+              status: 'idle',
+            }
+        }
         case 'SET_PROFILE': {
             return {
               ...state,
@@ -26,6 +32,7 @@ const profile = (state = initialState, action) => {
 }
 
 export const setAppLoadingMask = () => ({ type: 'SET_APP_LOADING_MASK' })
+export const setOffAppLoadingMask = () => ({ type: 'SET_OFF_APP_LOADING_MASK' })
 export const setProfile = (obj) => ({ type: 'SET_PROFILE', payload: obj})
 // export const fetchSkills = () => ({ type: 'SET_SKILLS', payload: []})
 

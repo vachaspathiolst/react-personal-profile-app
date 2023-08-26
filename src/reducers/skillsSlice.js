@@ -12,6 +12,12 @@ const skills = (state = initialState, action) => {
               status: 'loading',
             }
         }
+        case 'SET_OFF_APP_LOADING_MASK': {
+            return {
+                ...state,
+                status: 'idle',
+              }
+        }
         case 'SET_SKILLS': {
             return {
               ...state,
@@ -25,6 +31,7 @@ const skills = (state = initialState, action) => {
 }
 
 export const setAppLoadingMask = () => ({ type: 'SET_APP_LOADING_MASK' })
+export const setOffAppLoadingMask = () => ({ type: 'SET_OFF_APP_LOADING_MASK' })
 export const setSkills = (arr) => ({ type: 'SET_SKILLS', payload: arr})
 // export const fetchSkills = () => ({ type: 'SET_SKILLS', payload: []})
 
@@ -53,7 +60,9 @@ export const fetchSkills = () => async (dispatch) => {
         // doc.data() will be undefined in this case
         console.log("No such document!");
         dispatch(setSkills([]))
+        dispatch(setOffAppLoadingMask())
     }
+    // dispatch(setOffAppLoadingMask())
 }
 
 

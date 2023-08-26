@@ -487,8 +487,7 @@ button:hover, a:hover {
   object-fit: cover;
   max-height: 200px;
   object-position: top;
-  background: rgba(0, 0, 0, 0.834)
-  url("https://publicdomainvectors.org/photos/publicdomainq-notebook.png") center no-repeat;
+  background: rgba(0, 0, 0, 0.834) center no-repeat;
   animation: profile-pic-animation 4s 3;
 }
 .profile-card-profile-pic:hover {

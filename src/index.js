@@ -56,10 +56,10 @@ const router = createBrowserRouter([
     },
     {
       path: 'videos',
-      element: <VideoFilesList />
-    }
+      element: <VideoFilesList />,
+    },
   ]
-  },
+  }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -75,3 +75,17 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+// web worker for progressive web app
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(registration => {
+        console.log('Service Worker registered with scope:', registration.scope);
+      })
+      .catch(error => {
+        console.error('Service Worker registration failed:', error);
+      });
+  });
+}
+
+

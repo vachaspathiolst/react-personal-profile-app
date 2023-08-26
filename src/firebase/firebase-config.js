@@ -9,9 +9,9 @@ import { getStorage } from "firebase/storage";
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "", // use config files
-  authDomain: "vdurproj0001.firebaseapp.com",
-  projectId: "vdurproj0001",
-  storageBucket: "vdurproj0001.appspot.com",
+  authDomain: "",
+  projectId: "",
+  storageBucket: "",
   messagingSenderId: "",
   appId: ""
 };
